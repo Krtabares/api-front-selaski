@@ -1,0 +1,163 @@
+<div class="btn-toolbar mb-2 mb-md-0">
+
+  <button type="button" *ngIf=" (typeView=='new' || typeView=='edit' ) && !showform" #openBtn1 class="btn btn-sm btn-outline-info" (click)="typeViewNew()" >
+    Agregar producto
+  </button>
+</div>
+
+<div class="modal-body" *ngIf="showform">
+
+    <form class="needs-validation" autocomplete="off" [formGroup]="productForm" (ngSubmit)="submit()">
+
+      <div *ngIf="tabIndex==1">
+
+
+        <div class="row g-3">
+          <input type="hidden" class="form-control" id="idOrder"
+            [(ngModel)]="idOrder" formControlName="idOrder"
+            minlength="4" placeholder="" value="" required>
+
+          <div class="col-sm-12">
+            <label for="ValueUnit" class="form-label">ValueUnit</label>
+            <input type="text" class="form-control" id="ValueUnit" currencyMask
+            [(ngModel)]="product.ValueUnit" formControlName="ValueUnit"
+            minlength="4" placeholder="" value="" required>
+            <div *ngIf="submitted && f.ValueUnit.errors" class="invalid-feedback">
+              <div *ngIf="f.ValueUnit.errors.required">product Number is required</div>
+
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <label for="Unit" class="form-label">Unit</label>
+            <input type="text" class="form-control" id="Unit"
+            [(ngModel)]="product.Unit" formControlName="Unit"
+            [ngClass]="{ 'is-invalid': submitted && f.Unit.errors }"
+            placeholder="" value="" required>
+            <div *ngIf="submitted && f.Unit.errors" class="invalid-feedback">
+              <div *ngIf="f.Unit.errors.required">Unit is required</div>
+
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <label for="Description" class="form-label">Description</label>
+            <input type="text" class="form-control" id="Description"
+            [(ngModel)]="product.Description" formControlName="Description"
+            [ngClass]="{ 'is-invalid': submitted && f.Description.errors }"
+            placeholder="" value="" required>
+            <div *ngIf="submitted && f.Description.errors" class="invalid-feedback">
+              <div *ngIf="f.Description.errors.required">Description is required</div>
+
+            </div>
+          </div>
+
+          <div class="col-sm-12"  [hidden]="typeView=='edit'" >
+            <label for="SKU" class="form-label">SKU</label>
+            <input type="text" class="form-control" id="SKU"
+            [(ngModel)]="product.SKU" formControlName="SKU"
+            [ngClass]="{ 'is-invalid': submitted && f.SKU.errors }"
+            placeholder="" value="" required>
+            <div *ngIf="submitted && f.SKU.errors" class="invalid-feedback">
+              <div *ngIf="f.SKU.errors.required">SKU is required</div>
+
+            </div>
+          </div>
+
+          <div class="col-sm-12"  *ngIf="typeView=='edit'" >
+            <label for="SKU" class="form-label">SKU</label>
+            <input type="text" class="form-control"
+            [(ngModel)]="product.SKU" disabled="true" >
+          </div>
+
+          <div class="col-sm-12">
+            <label for="Quantity" class="form-label">Quantity</label>
+            <input type="text" class="form-control" id="Quantity"
+            [(ngModel)]="product.Quantity" formControlName="Quantity"
+            [ngClass]="{ 'is-invalid': submitted && f.Quantity.errors }"
+            placeholder="" value="" required>
+            <div *ngIf="submitted && f.Quantity.errors" class="invalid-feedback">
+              <div *ngIf="f.Quantity.errors.required">Quantity is required</div>
+
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <label for="QtyBox" class="form-label">QtyBox</label>
+            <input type="text" class="form-control" id="QtyBox"
+            [(ngModel)]="product.QtyBox" formControlName="QtyBox"
+            [ngClass]="{ 'is-invalid': submitted && f.QtyBox.errors }"
+            placeholder="" value="" required>
+            <div *ngIf="submitted && f.QtyBox.errors" class="invalid-feedback">
+              <div *ngIf="f.QtyBox.errors.required">QtyBox is required</div>
+
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <label for="Weight" class="form-label">Weight</label>
+            <input type="text" class="form-control" id="Weight"
+            [(ngModel)]="product.Weight" formControlName="Weight"
+            [ngClass]="{ 'is-invalid': submitted && f.Weight.errors }"
+            placeholder="" value="" required>
+            <div *ngIf="submitted && f.Weight.errors" class="invalid-feedback">
+              <div *ngIf="f.Weight.errors.required">Weight is required</div>
+
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <label for="Volumen" class="form-label">Volumen</label>
+            <input type="text" class="form-control" id="Volumen"
+            [(ngModel)]="product.Volumen" formControlName="Volumen"
+            [ngClass]="{ 'is-invalid': submitted && f.Volumen.errors }"
+            placeholder="" value="" required>
+            <div *ngIf="submitted && f.Volumen.errors" class="invalid-feedback">
+              <div *ngIf="f.Volumen.errors.required">Volumen is required</div>
+
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <label for="Mark" class="form-label">Mark</label>
+            <input type="text" class="form-control" id="Mark"
+            [(ngModel)]="product.Mark" formControlName="Mark"
+            [ngClass]="{ 'is-invalid': submitted && f.Mark.errors }"
+            placeholder="" value="" required>
+            <div *ngIf="submitted && f.Mark.errors" class="invalid-feedback">
+              <div *ngIf="f.Mark.errors.required">Mark is required</div>
+
+            </div>
+          </div>
+
+
+          <div class="form-floating">
+            <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+            [(ngModel)]="product.Status"
+            formControlName="Status" required>
+              <option selected>Open this select menu</option>
+              <option  value="1">activo</option>
+              <option  value="2">Inactivo</option>
+            </select>
+            <label for="floatingSelect">Status</label>
+            <div *ngIf="submitted && f.Status.errors" class="invalid-feedback">
+              <div *ngIf="f.Status.errors.required">Status is required</div>
+
+            </div>
+          </div>
+
+
+      </div>
+
+
+
+      </div>
+
+
+
+    </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="onReset()"  *ngIf="showform && typeView!='view'"  >Limpiar</button>
+  <button type="submit" class="btn btn-primary" (click)="submit()" *ngIf=" showform  && typeView!='view'">Save</button>
+</div>

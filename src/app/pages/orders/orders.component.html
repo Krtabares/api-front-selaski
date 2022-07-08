@@ -1,0 +1,16 @@
+<app-header></app-header>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- <app-sidebarmenu class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"></app-sidebarmenu> -->
+    <main class="col-md-12">
+      <app-mod-titulo></app-mod-titulo>
+      <app-order-crud [order]="order" (refreshList)="getOrders()" ></app-order-crud>
+      <app-order-list [registres]="ordersList" [headers]="columnsHeaders" (selectedOpt)="eventoOrder($event)"></app-order-list>
+
+    </main>
+
+  </div>
+
+</div>
+

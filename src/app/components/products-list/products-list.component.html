@@ -1,0 +1,48 @@
+
+<div class="table-responsive">
+  <table class="table table-striped table-sm">
+    <thead >
+      <tr>
+        <th *ngIf="typeView != 'new'" >
+          <span>opciones</span>
+        </th>
+        <ng-container *ngFor="let column of headers">
+          <th class="text-center "
+            (click)="orderBy(column)" style=" cursor: pointer; ">
+            <div class="d-flex justify-content-center">
+              <span>{{ column }}</span>
+              &nbsp;
+              <!-- <mat-icon [class]="column.icon"></mat-icon> -->
+            </div>
+          </th>
+        </ng-container>
+
+      </tr>
+    </thead>
+
+    <tbody>
+      <span *ngIf="registres.length < 1">Sin resultados</span>
+      <ng-container *ngFor="let row of valuesAux; let i = index">
+          <tr>
+              <td *ngIf="typeView != 'new'">
+                <i class="fa-solid fa-eye" (click)="selectValue(row,'view')"></i>
+                <i class="fa-solid fa-pencil" (click)="selectValue(row, 'edit')"></i>
+                <i class="fa fa-trash" (click)="deleteProducts(row.idOrdersProducts)"></i>
+            </td>
+              <ng-container *ngFor="let column of headers ">
+                  <td>
+
+                    <ng-container ><p>{{ getValue(row, column) }}</p></ng-container>
+
+                  </td>
+
+              </ng-container>
+
+
+          </tr>
+
+      </ng-container>
+
+    </tbody>
+  </table>
+</div>

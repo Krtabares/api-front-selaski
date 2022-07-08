@@ -1,0 +1,147 @@
+<div class="btn-toolbar mb-2 mb-md-0">
+  <button type="button" #openBtn class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#modalSolicitud" (click)="typeViewNew()" >
+    Agregar Orden
+  </button>
+</div>
+
+<div class="modal fade" id="modalSolicitud" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{title}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModal()" #closeBtn></button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs">
+          <li class="nav-item"  (click)="goToTab(1)">
+            <a class="nav-link" [ngClass]="{'active':tabIndex==1}"  >Orden</a>
+          </li>
+          <li class="nav-item" (click)="goToTab(2)" *ngIf=" typeView != 'new'" >
+            <a class="nav-link" [ngClass]="{'active':tabIndex==2} "  >Productos</a>
+          </li>
+
+        </ul>
+
+          <form class="needs-validation"  [formGroup]="orderForm" (ngSubmit)="submit()">
+
+            <div *ngIf="tabIndex==1">
+              <div class="form-floating">
+                {{msg}}
+                <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                [(ngModel)]="order.idUser"
+                formControlName="idUser" required>
+                  <option selected>Open this select menu</option>
+                  <option *ngFor="let user of userList;" value="{{user.idUser}}">{{user.name}}</option>
+                </select>
+                <label for="floatingSelect">Usuario </label>
+                <div *ngIf="submitted && f.idUser.errors || msg" class="invalid-feedback">
+                  <div *ngIf="f.idUser.errors">User is required</div>
+
+                </div>
+              </div>
+
+              <div class="row g-3">
+                <div class="col-sm-12">
+                  <label for="firstName" class="form-label">OrderNumber</label>
+                  <input type="text" class="form-control" id="OrderNumber"
+                  [(ngModel)]="order.OrderNumber" formControlName="OrderNumber"
+                  placeholder="" value="" required>
+                  <div *ngIf="submitted && f.OrderNumber.errors" class="invalid-feedback">
+                    <div *ngIf="f.OrderNumber.errors.required">Order Number is required</div>
+
+                  </div>
+                </div>
+
+                <div class="col-sm-12">
+                  <label for="ProviderName" class="form-label">ProviderName</label>
+                  <input type="text" class="form-control" id="ProviderName"
+                  [(ngModel)]="order.ProviderName" formControlName="ProviderName"
+                  [ngClass]="{ 'is-invalid': submitted && f.ProviderName.errors }"
+                  placeholder="" value="" required>
+                  <div *ngIf="submitted && f.ProviderName.errors" class="invalid-feedback">
+                    <div *ngIf="f.ProviderName.errors.required">ProviderName is required</div>
+
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <label for="fecha" class="form-label">Fecha o</label>
+                  <div class="input-group has-validation">
+                    <input type="date" class="form-control" id="fecha"
+                    [(ngModel)]="order.DateTime"  formControlName="DateTime"
+                    [ngClass]="{ 'is-invalid': submitted && f.DateTime.errors }"
+                     placeholder="01-01-1991" required>
+                     <div *ngIf="submitted && f.DateTime.errors" class="invalid-feedback">
+                        <div *ngIf="f.DateTime.errors.required">date is required</div>
+
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-12">
+                  <label for="Observation" class="form-label">Observation</label>
+                  <input type="text" class="form-control" id="Observation"
+                  [(ngModel)]="order.Observation" formControlName="Observation"
+                  [ngClass]="{ 'is-invalid': submitted && f.Observation.errors }"
+                  placeholder="" value="" required>
+                  <div *ngIf="submitted && f.Observation.errors" class="invalid-feedback">
+                    <div *ngIf="f.Observation.errors.required">Observation is required</div>
+
+                  </div>
+                </div>
+
+                <div class="col-sm-12">
+                  <label for="TotalValue" class="form-label">TotalValue</label>
+                  <input type="text" class="form-control" id="TotalValue" currencyMask
+                  [(ngModel)]="order.TotalValue" formControlName="TotalValue"
+                  [ngClass]="{ 'is-invalid': submitted && f.TotalValue.errors }"
+                  placeholder="" value="" required>
+                  <div *ngIf="submitted && f.TotalValue.errors" class="invalid-feedback">
+                    <div *ngIf="f.TotalValue.errors.required">TotalValue is required</div>
+
+                  </div>
+                </div>
+
+                <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                  [(ngModel)]="order.Status"
+                  formControlName="Status" required>
+                    <option selected>Open this select menu</option>
+                    <option  value="1">activo</option>
+                    <option  value="2">Inactivo</option>
+                  </select>
+                  <label for="floatingSelect">Status</label>
+                  <div *ngIf="submitted && f.Status.errors" class="invalid-feedback">
+                    <div *ngIf="f.Status.errors.required">Status is required</div>
+
+                  </div>
+                </div>
+
+
+            </div>
+
+
+
+            </div>
+          </form>
+            <div *ngIf="tabIndex==2">
+              <div class="col-sm-12">
+                <div *ngIf=" typeView != 'new'">
+
+                <app-products-crud [idOrder]="order.idOrder" [typeView]="typeView" (refreshList)="getProducts()" [product]="selectProduct" ></app-products-crud>
+                </div>
+                <app-products-list [registres]="productsList"  [typeView]="typeView" (refreshList)="getProducts()" (selectedOpt)="selected($event)"  ></app-products-list>
+
+              </div>
+            </div>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="onReset()" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" (click)="submit()" *ngIf=" typeView=='new' || typeView=='edit'">Save {{typeView}}</button>
+      </div>
+    </div>
+  </div>
+</div>
